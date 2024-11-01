@@ -1,7 +1,10 @@
 using Photon.Pun;
+using Photon.Realtime;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -16,9 +19,9 @@ public class KingOfTheHillManager : MiniGameManager
     public PlayerEntry playerScoreTextPrefab;
     public RectTransform scoreBoard;
     public Text scoreText;
-
+    public LocalScoreBoard localScoreBoard;
     private int eliminatePlayerCount;
-
+    private int count = 0;
     private void Start()
     {
         eliminatePlayerCount = Mathf.RoundToInt(PhotonNetwork.CurrentRoom.PlayerCount * (2.0f / 3.0f));
@@ -53,6 +56,20 @@ public class KingOfTheHillManager : MiniGameManager
         }
     }
 
+    private void Update()
+    {
+        if (playerScoreTexts[PhotonNetwork.LocalPlayer.ActorNumber].willEliminated.enabled)
+        {
+            localScoreBoard.scoreUp.color = new Color(1,0.5f,0);
+            localScoreBoard.scoreDown.color = Color.red;
+        }
+        else
+        {
+            localScoreBoard.scoreUp.color = new Color(0,200f/255f,0);
+            localScoreBoard.scoreDown.color = Color.green;
+        }
+    }
+
     [PunRPC]
     public void SyncScore(int playerActorNr, float newScore)
     {
@@ -81,7 +98,21 @@ public class KingOfTheHillManager : MiniGameManager
     [PunRPC]
     public void EliminatePlayer(int viewID)
     {
-        PhotonView.Find(viewID).GetComponent<PlayerController>().Eliminated();
+        var photonView = PhotonView.Find(viewID);
+        if (photonView == null)
+        {
+            Debug.LogError($"No PhotonView found with ID {viewID}");
+            return;
+        }
+
+        var playerController = photonView.GetComponent<PlayerController>();
+        if (playerController == null)
+        {
+            Debug.LogError("PlayerController component is missing on the player object.");
+            return;
+        }
+
+        playerController.Eliminated();
     }
 
     public void SetSurvivalStatus()
@@ -98,25 +129,40 @@ public class KingOfTheHillManager : MiniGameManager
                 player.SetCustomProperties(props);
             }
             else
-                print("À¸¾Ç");
+                print("ï¿½ï¿½ï¿½ï¿½");
         }
     }
+    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
+    {
+        count++;
+    }
 
+    [PunRPC]
+    public void ActivateGameOverUI()
+    {
+        gameOverUI.texts[1].text = $"{gameManager.leftPlayerCount}ëª… ìƒì¡´";
+        gameOverUI.gameObject.SetActive(true);
+    }
+
+    
     public override void GameOver()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            return;
         SetSurvivalStatus();
+        StartCoroutine(EliminatePlayers());
+        
+    }
 
-        foreach (Photon.Realtime.Player player in PhotonNetwork.CurrentRoom.Players.Values)
+    private IEnumerator EliminatePlayers()
+    {
+        yield return new WaitUntil(() => count == PhotonNetwork.CurrentRoom.PlayerCount);
+        foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
         {
             if (!(bool)player.CustomProperties["survived"])
-            {
-                EliminatePlayer(player.ActorNumber);
-            }
+                 photonView.RPC("EliminatePlayer", RpcTarget.All, gameManager.playersViewID[player.ActorNumber]);
         }
-
-        gameOverUI.texts[1].text = $"{gameManager.leftPlayerCount}¸í »ýÁ¸";
-        gameOverUI.gameObject.SetActive(true);
-
+        photonView.RPC("ActivateGameOverUI", RpcTarget.All);
         gameManager.Progress();
     }
 }

@@ -21,7 +21,7 @@ public class Timer : MonoBehaviour
             {
                 timeRemaining = 0;
                 timerIsRunning = false;
-                if (timer != null)// freezetimerÀÇ °æ¿ì
+                if (timer != null)// freezetimerì˜ ê²½ìš°
                 {
                     if (minigameManager != null)
                         minigameManager.GameStart();

@@ -3384,7 +3384,7 @@ MonoBehaviour:
   timerText: {fileID: 204887461}
   timeRemaining: 5
   timerIsRunning: 0
-  minigameManager: {fileID: 0}
+  minigameManager: {fileID: 544127261}
 --- !u!114 &204887461
 MonoBehaviour:
   m_ObjectHideFlags: 0

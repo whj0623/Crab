@@ -9,13 +9,13 @@ public class RedLightManager : MiniGameManager
 {
     public GameManager gameManager;
     public GameOverUI gameOverUI;
-    public Statue statue; // ¼ú·¡ÀÇ À§Ä¡¸¦ ³ªÅ¸³»´Â Statue
+    public Statue statue; // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ Statue
     public float distanceThreshold = 1f; // 1m
     public bool isGameOver = false;
 
-    private float checkingLeftTime = 5; // °üÃø ½Ã°£
+    private float checkingLeftTime = 5; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
     private Dictionary<PhotonView, Vector3> playerPositions = new Dictionary<PhotonView, Vector3>();
-    private HashSet<int> eliminatedPlayers = new HashSet<int>(); // ÀÌ¹Ì Á×ÀÎ ÇÃ·¹ÀÌ¾î ÀúÀå
+    private HashSet<int> eliminatedPlayers = new HashSet<int>(); // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ï¿½
     private bool isObserving = false;
 
     public override void GameStart()
@@ -39,10 +39,10 @@ public class RedLightManager : MiniGameManager
             StartCoroutine(statue.Turn());
             
             yield return new WaitForSeconds(0.5f);
-            StartObserving(); // °üÃø ½ÃÀÛ
+            StartObserving(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             
             yield return new WaitForSeconds(checkingLeftTime);
-            StopObserving(); // °üÃø Á¾·á
+            StopObserving(); // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             
             StartCoroutine(statue.Turn());
         }
@@ -52,12 +52,6 @@ public class RedLightManager : MiniGameManager
     {
         if (isGameOver) return;
         
-        foreach (PlayerController player in gameManager.players)
-            if (!player.isDead) return;
-        GameOver();
-
-        if (!isObserving) return;
-
         foreach (var player in playerPositions.Keys)
         {
             Vector3 initialPosition = playerPositions[player];
@@ -66,7 +60,7 @@ public class RedLightManager : MiniGameManager
             if (distanceMoved >= 0.1f && !IsPlayerHiddenByOthers(player))
             {
                 int viewID = player.ViewID;
-                if (!eliminatedPlayers.Contains(viewID) && PhotonView.Find(viewID).gameObject.transform.position.z > -50) // ÀÌ¹Ì Á×ÀÌÁö ¾ÊÀº ÇÃ·¹ÀÌ¾îÀÎÁö È®ÀÎ
+                if (!eliminatedPlayers.Contains(viewID) && PhotonView.Find(viewID).gameObject.transform.position.z > -50) // ï¿½Ì¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ï¿½ï¿½ï¿½ï¿½ È®ï¿½ï¿½
                 {
                     eliminatedPlayers.Add(viewID); 
                     photonView.RPC("EliminatePlayer", RpcTarget.All, viewID);
@@ -81,7 +75,7 @@ public class RedLightManager : MiniGameManager
     {
         isObserving = true;
         playerPositions.Clear();
-        eliminatedPlayers.Clear(); // »õ °üÃø ½ÃÀÛ ½Ã Á¦°ÅµÈ ÇÃ·¹ÀÌ¾î ¸ñ·Ï ÃÊ±âÈ­
+        eliminatedPlayers.Clear(); // ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Åµï¿½ ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
 
         foreach (var player in gameManager.players)
         {
@@ -133,7 +127,7 @@ public class RedLightManager : MiniGameManager
                 photonView.RPC("EliminatePlayer", RpcTarget.All, player.ActorNumber);
         }
 
-        gameOverUI.texts[1].text = $"{gameManager.leftPlayerCount}¸í »ýÁ¸";
+        gameOverUI.texts[1].text = $"{gameManager.leftPlayerCount}ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½";
         gameOverUI.gameObject.SetActive(true);
 
         gameManager.Progress();

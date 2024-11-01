@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
+
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviourPunCallbacks
 {
@@ -30,7 +31,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     public Action OnPlayerDead { get; set; } 
     public float moveX = 0, moveY = 0;
     public bool isFreeze = false;
-    
+
     private CharacterController cc;
     private float vertRot = 0f;
     private Vector3 moveDir;
@@ -38,6 +39,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private float slideTimer = 0f;
     private Vector3 camPos, camTargetPos;
     private PlayerVisibility pv;
+    private bool isSpectator = false;
+
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -46,7 +49,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
         rb.isKinematic = true;
 
         if (!photonView.IsMine) return;
-
         camPos = cam.transform.localPosition;
         camTargetPos = camPos;
         Cursor.lockState = CursorLockMode.Locked;
@@ -56,6 +58,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
     void Update()
     {
         if (!photonView.IsMine) return;
+
         if (!isDead)
         {
             Look();
@@ -86,6 +89,10 @@ public class PlayerController : MonoBehaviourPunCallbacks
         else
         {
             CamPosUpdateDead();
+            if (isSpectator)
+            {
+                SpectatorCameraControl();
+            }
         }
     }
 
@@ -167,6 +174,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             }
         }
     }
+    
     [PunRPC]
     private void Pushed(Vector3 sourcePosition)
     {
@@ -194,7 +202,6 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
         ReEnableMovement();
     }
-
 
     [PunRPC]
     void PlayAnimation(string animationName)
@@ -253,6 +260,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             cam.transform.LookAt(deathCamTarget);
         }
     }
+
     public void Eliminated()
     {
         OnPlayerDead?.Invoke();
@@ -271,11 +279,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.SetCustomProperties(customProps);
         }
 
-
-
         StartCoroutine(SwitchToSpectatorMode());
     }
-
 
     private void OnTriggerEnter(Collider other)
     {
@@ -287,30 +292,31 @@ public class PlayerController : MonoBehaviourPunCallbacks
     {
         isDead = true;
         anim.enabled = false;
-        rb.isKinematic = false;
-        if (photonView.IsMine)
-        {
-            Hashtable customProps = PhotonNetwork.LocalPlayer.CustomProperties;
-            customProps["survived"] = false;
-            PhotonNetwork.LocalPlayer.SetCustomProperties(customProps);
-        }
-
         pv.DeadCamera();
         StartCoroutine(SwitchToSpectatorMode());
     }
 
     private IEnumerator SwitchToSpectatorMode()
     {
-        yield return new WaitForSeconds(3f);
-        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
-        foreach (GameObject player in players)
+        isSpectator = true;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+
+        while (isSpectator)
         {
-            if (player.TryGetComponent<PlayerController>(out PlayerController pc) && !player.GetComponent<PlayerController>().isDead)
-            {
-                cam.transform.SetParent(player.transform);
-                cam.transform.SetPositionAndRotation(pc.cam.gameObject.transform.position, Quaternion.identity);
-                break;
-            }
+            yield return null;
         }
+
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+    }
+
+    private void SpectatorCameraControl()
+    {
+        float mouseX = Input.GetAxis("Mouse X") * sens;
+        float mouseY = Input.GetAxis("Mouse Y") * sens;
+
+        cam.transform.Rotate(-mouseY, mouseX, 0);
+        cam.transform.LookAt(transform.position);
     }
 }

@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public List<PlayerController> players;
     public MiniGameManager minigameManager;
     public string[] gameScenes ={"Small Glass Jump","Small Color Climb", "Desert","Splat","Karlson"};
-    
+    public Dictionary<int, int> playersViewID;
     private int playersReady = 0;
 
     public int CurrentGame = 0;
@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         leftPlayerCount = PhotonNetwork.CurrentRoom.PlayerCount;
         leftPlayerCountText.text = leftPlayerCount.ToString();
         deadPlayerCountText.text = "0";
+        playersViewID = new Dictionary<int, int>();
     }
 
     IEnumerator Ready()
@@ -55,6 +56,8 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameObject playerObj = PhotonNetwork.Instantiate("Player/Player", playerPos.position, playerPos.rotation); 
             playerObj.name = $"Player {PhotonNetwork.LocalPlayer.NickName}";
             PlayerController playerController = playerObj.GetComponent<PlayerController>();
+            if (PhotonNetwork.IsMasterClient)
+                playersViewID.Add(playerNumber+1,playerController.GetComponent<PhotonView>().ViewID);
             playerController.OnPlayerDead += OnPlayerDead;
             playerController.isFreeze = true;
             players.Add(playerController);
@@ -100,8 +103,8 @@ public class GameManager : MonoBehaviourPunCallbacks
                 photonView.RPC("LoadNextGameScene", RpcTarget.All, ChooseNextGame());
             //else
             //{
-            //   ¿ì½ÂÀÚ°¡ ÀÖÀ» °æ¿ì => ¿ì½Â ¾À
-            //   ¾ø´Â °æ¿ì => RoomÀ¸·Î µ¹¾Æ°¨
+            //   ï¿½ï¿½ï¿½ï¿½Ú°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½ ï¿½ï¿½
+            //   ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ => Roomï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Æ°ï¿½
             //}
         }
     }
@@ -120,14 +123,27 @@ public class GameManager : MonoBehaviourPunCallbacks
         return i;
     }
 
-    [PunRPC]
+   [PunRPC]
     void PlayerReady()
     {
         if (PhotonNetwork.IsMasterClient)
         {
             playersReady++;
             if (playersReady == PhotonNetwork.PlayerList.Length)
+            {
+                foreach (int viewID in playersViewID.Values)
+                {
+                    PhotonView view = PhotonView.Find(viewID);
+                    if (view != null)
+                    {
+                        PlayerController playerController = view.GetComponent<PlayerController>();
+                        if (playerController != null && !players.Contains(playerController))
+                            players.Add(playerController);
+                    }
+                }
+                
                 photonView.RPC("SyncTimer", RpcTarget.All);
+            }
         }
     }
 
