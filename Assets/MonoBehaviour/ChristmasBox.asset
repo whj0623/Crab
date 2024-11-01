@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace63bf3854780cb91546d8222d2e848, type: 3}
+  m_Name: ChristmasBox
+  m_EditorClassIdentifier:
+  itemdefid: 1008
+  name: Christmas Box
+  description: "Holiday 2021 Collection<br>This box contains one of the following items:<br><br><color=#EAEAEA>Santa's Beard</color><br><color=#EAEAEA>Santa's Hat</color><br><color=#EAEAEA>Elf Shoes</color><br><color=#EAEAEA>Messy</color><br><color=#52ADFF>Scarf</color><br><color=#52ADFF>Rudolph</color><br><color=#52ADFF>Christmas Socks</color><br><color=#FF3D39>Lucky Boots</color><br><color=#FF3D39>Pumpkin</color><br><color=#FF62D1>Protagonist</color><br><color=#FF62D1>Gingerbread Mask</color><br><color=#FFEB39>Lucky Hat</color><br><color=#FFEB39>Elf Hat</color><br><br><color=#C6E2FF><sprite=4 color=#C6E2FF>Item appears in unique <i>colors</i><br><sprite=4 color=#C6E2FF>Small chance of a <i>shiny</i> item</color>\r"
+  type: 6
+  rarity: 1
+  icon: {fileID: 2800000, guid: 1cba46475f7c0d14290c444266bf7df8, type: 3}
+  mesh: {fileID: 4300000, guid: 4080e62e8f4e5254ab18c86474f1fb81, type: 2}
+  materials:
+  - {fileID: 2100000, guid: e5a074f7b3dd7e842b220557faf47d7f, type: 2}
+  - {fileID: 2100000, guid: d6579894eabb2b4498ccaf41c078423a, type: 2}
+  - {fileID: 2100000, guid: 5101ec30835bc0f44bd44005c8256f3f, type: 2}
+  - {fileID: 2100000, guid: 657aad659ed46184884b0cf3baef36c9, type: 2}
+  - {fileID: 2100000, guid: af9beca571e38ba48ba306b6e63fd8e4, type: 2}
+  - {fileID: 2100000, guid: 790461e1b58f9e34b958a74338630566, type: 2}
+  - {fileID: 2100000, guid: 5ec2d95b437790744bd2de4ee1bdbae0, type: 2}
+  materialToChangeColorOn: 0
+  exchangeItemDefId: 1009
+  hatOffset: {x: 0, y: 0, z: 0}
+  hatThresholdBeforeOffset: {x: 0, y: 0, z: 0}
+  ignoreOffset: 0

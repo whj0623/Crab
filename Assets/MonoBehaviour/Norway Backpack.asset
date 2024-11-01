@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace63bf3854780cb91546d8222d2e848, type: 3}
+  m_Name: Norway Backpack
+  m_EditorClassIdentifier:
+  itemdefid: 903
+  name: Norway Backpack
+  description: A nice and roomy backpack. I can probably fit 5 medium sized lasagnas in there.
+  type: 8
+  rarity: 6
+  icon: {fileID: 2800000, guid: 02a4ca4573c88764a8ac475b1855d363, type: 3}
+  mesh: {fileID: 4300000, guid: e370fa2301854b8428ad16f0eef1df84, type: 2}
+  materials:
+  - {fileID: 2100000, guid: 97033daeac922034181b02a8ab156cdb, type: 2}
+  - {fileID: 2100000, guid: 5a219389ff5ac8f4c9a217f9ec6389f4, type: 2}
+  - {fileID: 2100000, guid: 2c7167c34a0a98f479a53060ca815c6d, type: 2}
+  - {fileID: 2100000, guid: 725407357a084af4283c47cee2d3d57a, type: 2}
+  - {fileID: 2100000, guid: 8b3e1ea6589889c409fa6aeb5ca03a83, type: 2}
+  materialToChangeColorOn: 0
+  exchangeItemDefId: 0
+  hatOffset: {x: 0, y: 0, z: 0}
+  hatThresholdBeforeOffset: {x: 0, y: 0, z: 0}
+  ignoreOffset: 0

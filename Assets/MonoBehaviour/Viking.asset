@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace63bf3854780cb91546d8222d2e848, type: 3}
+  m_Name: Viking
+  m_EditorClassIdentifier:
+  itemdefid: 210
+  name: Viking
+  description: A classic viking helmet made of .. strong materials and stuff idunno
+  type: 2
+  rarity: 2
+  icon: {fileID: 2800000, guid: 5d82e76a9e3553444a932202b4cebb07, type: 3}
+  mesh: {fileID: 4300000, guid: 93a84b8c131e0b141bf4914ad92bbb0d, type: 2}
+  materials:
+  - {fileID: 2100000, guid: 8b3e1ea6589889c409fa6aeb5ca03a83, type: 2}
+  - {fileID: 2100000, guid: 1958f5c49e9872046b8f8361a88a1c39, type: 2}
+  - {fileID: 2100000, guid: 69969dd8c2a58454083e1b1f7f4b868d, type: 2}
+  materialToChangeColorOn: 1
+  exchangeItemDefId: 0
+  hatOffset: {x: 0, y: 0, z: 0}
+  hatThresholdBeforeOffset: {x: 0, y: 0, z: 0}
+  ignoreOffset: 0

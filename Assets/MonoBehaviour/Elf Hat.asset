@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace63bf3854780cb91546d8222d2e848, type: 3}
+  m_Name: Elf Hat
+  m_EditorClassIdentifier:
+  itemdefid: 223
+  name: Elf Hat
+  description: Stolen from an elf.
+  type: 2
+  rarity: 4
+  icon: {fileID: 2800000, guid: 819b1cf75a8d9ed4bb5aafe9a3407c4a, type: 3}
+  mesh: {fileID: 4300000, guid: 0a1a4a1d02564734d8ddd7449699d03a, type: 2}
+  materials:
+  - {fileID: 2100000, guid: af9beca571e38ba48ba306b6e63fd8e4, type: 2}
+  - {fileID: 2100000, guid: 1bb723160f632cf48b1b6640668f09b8, type: 2}
+  - {fileID: 2100000, guid: 790461e1b58f9e34b958a74338630566, type: 2}
+  materialToChangeColorOn: 1
+  exchangeItemDefId: 0
+  hatOffset: {x: 0, y: 0, z: 0}
+  hatThresholdBeforeOffset: {x: 0, y: 0, z: 0}
+  ignoreOffset: 0

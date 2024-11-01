@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace63bf3854780cb91546d8222d2e848, type: 3}
+  m_Name: Sneakers
+  m_EditorClassIdentifier:
+  itemdefid: 600
+  name: Sneakers
+  description: It smells like old sneakers. Probably because they are old sneakers.
+  type: 4
+  rarity: 0
+  icon: {fileID: 2800000, guid: 9d9f077039f24894c8f0be1c23b9c4f3, type: 3}
+  mesh: {fileID: 4300000, guid: b7d48ccb27698bf47ad77ecc3b3cd50e, type: 2}
+  materials:
+  - {fileID: 2100000, guid: 2e0f2426c0fc91f4dbc7a477121ac821, type: 2}
+  - {fileID: 2100000, guid: 1bef5b157705b1749bd4e49a135d1e4a, type: 2}
+  - {fileID: 2100000, guid: 5653b53ac3a1c324189eaf5f99a3eb00, type: 2}
+  - {fileID: 2100000, guid: 00e99c5a9e51d4c44a8d3a22d316b7cd, type: 2}
+  - {fileID: 2100000, guid: 11e8e1dc2016d064baf1d9671551008d, type: 2}
+  materialToChangeColorOn: 1
+  exchangeItemDefId: 0
+  hatOffset: {x: 0, y: 0, z: 0}
+  hatThresholdBeforeOffset: {x: 0, y: 0, z: 0}
+  ignoreOffset: 0

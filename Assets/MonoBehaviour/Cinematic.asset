@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -2099961501, guid: e161fae64b898bc22624d03ed611378f, type: 3}
+  m_Name: Cinematic
+  m_EditorClassIdentifier:
+  settings:
+  - {fileID: 11400000, guid: 1c37a84080bec0244a428803eeeb01ac, type: 2}
+  - {fileID: 11400000, guid: 1197dfb4e479ebc47aacd43c13ad9ce2, type: 2}
+  - {fileID: 11400000, guid: 6e6271aa1f4adf54a8416a436f4664a9, type: 2}
+  - {fileID: 11400000, guid: 8b25bc9f20b076c41b2870e48b4c856c, type: 2}
+  - {fileID: 11400000, guid: 53224cb2654f6274cbb0d4f7f5f2c450, type: 2}
+  - {fileID: 11400000, guid: b29cdc8d22b2ed742baff9595c4a1f6a, type: 2}
+  - {fileID: 11400000, guid: 8acba61aabcf7974bbd839f2c632b4f8, type: 2}
+  - {fileID: 11400000, guid: 88ddafe33ae2fa04c873626cbb0d7380, type: 2}
+  - {fileID: 11400000, guid: e5f1f3aefd4742141975d19bf4e802ee, type: 2}

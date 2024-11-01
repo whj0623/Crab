@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace63bf3854780cb91546d8222d2e848, type: 3}
+  m_Name: Crab
+  m_EditorClassIdentifier:
+  itemdefid: 224
+  name: Crab
+  description: "Finally, crab in crab game.\n\n<color=#C6E2FF><sprite=4 color=#C6E2FF>This is an exclusive Crab Store Item. Can <i>not</i> be found in crates.</color>"
+  type: 2
+  rarity: 6
+  icon: {fileID: 2800000, guid: 17e46100095cb484d9d5c1075e4f8b1e, type: 3}
+  mesh: {fileID: 4300000, guid: cc3e2458c1e647f41bb3d379258f9790, type: 2}
+  materials:
+  - {fileID: 2100000, guid: 659c812408d7bb0458624e61fea25906, type: 2}
+  - {fileID: 2100000, guid: 69969dd8c2a58454083e1b1f7f4b868d, type: 2}
+  - {fileID: 2100000, guid: e6c14540df5a4af4c8683429c8143801, type: 2}
+  - {fileID: 2100000, guid: 29b1c1930ad46964699f770af55837bf, type: 2}
+  materialToChangeColorOn: 0
+  exchangeItemDefId: 0
+  hatOffset: {x: 0, y: 0, z: 0}
+  hatThresholdBeforeOffset: {x: 0, y: 0.32, z: 0}
+  ignoreOffset: 0

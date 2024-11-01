@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace63bf3854780cb91546d8222d2e848, type: 3}
+  m_Name: Colorful Backpack
+  m_EditorClassIdentifier:
+  itemdefid: 900
+  name: Colorful Backpack
+  description: A nice and roomy backpack. I can probably fit 5 medium sized lasagnas in there.
+  type: 8
+  rarity: 6
+  icon: {fileID: 2800000, guid: f44eb9a76678e5749bd7ccb5d06e5610, type: 3}
+  mesh: {fileID: 4300000, guid: e370fa2301854b8428ad16f0eef1df84, type: 2}
+  materials:
+  - {fileID: 2100000, guid: 9dae32448d1aa5b4390a58cf5e68a638, type: 2}
+  - {fileID: 2100000, guid: 672172e6eae64df409b3c92f15cb4dc9, type: 2}
+  - {fileID: 2100000, guid: bd97a6109e455cf49b5d4569f245025c, type: 2}
+  - {fileID: 2100000, guid: 0337499ca1480f141b05813a3fbe5889, type: 2}
+  - {fileID: 2100000, guid: 8b3e1ea6589889c409fa6aeb5ca03a83, type: 2}
+  materialToChangeColorOn: 0
+  exchangeItemDefId: 0
+  hatOffset: {x: 0, y: 0, z: 0}
+  hatThresholdBeforeOffset: {x: 0, y: 0, z: 0}
+  ignoreOffset: 0

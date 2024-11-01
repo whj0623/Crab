@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 77834687c7aa5ca22716c060c3e785fc, type: 3}
+  m_Name: Bomb_Sounds
+  m_EditorClassIdentifier:
+  use:
+  - {fileID: 8300000, guid: 128bf919393d602449aaa251044594e8, type: 3}
+  equip:
+  - {fileID: 8300000, guid: 2aa1d7bbe5211664da80191cf4481886, type: 3}
+  reload: []
+  hit:
+  - {fileID: 8300000, guid: 136a8b60d8514d34eb0beb18f4b18ce9, type: 3}
+  - {fileID: 8300000, guid: d58eeba3c1028934c859b01fcaa431ce, type: 3}

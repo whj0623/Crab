@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace63bf3854780cb91546d8222d2e848, type: 3}
+  m_Name: Gingerbread Mask
+  m_EditorClassIdentifier:
+  itemdefid: 420
+  name: Gingerbread Mask
+  description: Looks delicious, I kinda wanna eat it.
+  type: 3
+  rarity: 3
+  icon: {fileID: 2800000, guid: d10bb6bf0cf95ad4597b88a7aab53dd6, type: 3}
+  mesh: {fileID: 4300000, guid: a7486e761c570a04f8b8c62461dda57f, type: 2}
+  materials:
+  - {fileID: 2100000, guid: b8233ef39bbaac840ad5da654cfd7689, type: 2}
+  - {fileID: 2100000, guid: c9449f0846755a74e990d2aa4caea4ec, type: 2}
+  - {fileID: 2100000, guid: dba394ddc2be9ef4194d9d14cec9b840, type: 2}
+  - {fileID: 2100000, guid: 697422870f51c8c41939b4d68d3d1d18, type: 2}
+  materialToChangeColorOn: 0
+  exchangeItemDefId: 0
+  hatOffset: {x: 0, y: 0, z: 0}
+  hatThresholdBeforeOffset: {x: 0, y: 0, z: 0}
+  ignoreOffset: 0

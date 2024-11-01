@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace63bf3854780cb91546d8222d2e848, type: 3}
+  m_Name: Buzz Hair
+  m_EditorClassIdentifier:
+  itemdefid: 4
+  name: Buzz
+  description: That's not a lot of hair.
+  type: 1
+  rarity: 1
+  icon: {fileID: 2800000, guid: bbb9cedc162359746bab179c129320aa, type: 3}
+  mesh: {fileID: 4300000, guid: 68f9e543ce11c2f4883354a90f0e2c1d, type: 2}
+  materials:
+  - {fileID: 2100000, guid: c5bdec46a55499d449a18f32b1d24795, type: 2}
+  - {fileID: 2100000, guid: 7bf50b7a81b152c4a8c92fcce54792d5, type: 2}
+  - {fileID: 2100000, guid: 4e14095432823854e812fe31c8f99afc, type: 2}
+  materialToChangeColorOn: 2
+  exchangeItemDefId: 0
+  hatOffset: {x: 0, y: 0, z: 0}
+  hatThresholdBeforeOffset: {x: 0, y: 0, z: 0}
+  ignoreOffset: 0

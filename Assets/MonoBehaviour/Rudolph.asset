@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace63bf3854780cb91546d8222d2e848, type: 3}
+  m_Name: Rudolph
+  m_EditorClassIdentifier:
+  itemdefid: 221
+  name: Rudolph
+  description: Rudolph probably doesn't need this. It looks better on me anyway.
+  type: 2
+  rarity: 1
+  icon: {fileID: 2800000, guid: 325cbf28b20237d48a9e136c65ee22d7, type: 3}
+  mesh: {fileID: 4300000, guid: 5832b32afe8912148ad53d12a9191f0d, type: 2}
+  materials:
+  - {fileID: 2100000, guid: 1bb723160f632cf48b1b6640668f09b8, type: 2}
+  materialToChangeColorOn: 0
+  exchangeItemDefId: 0
+  hatOffset: {x: 0, y: 0, z: 0}
+  hatThresholdBeforeOffset: {x: 0, y: 0, z: 0}
+  ignoreOffset: 1

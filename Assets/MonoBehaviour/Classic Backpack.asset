@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ace63bf3854780cb91546d8222d2e848, type: 3}
+  m_Name: Classic Backpack
+  m_EditorClassIdentifier:
+  itemdefid: 902
+  name: Classic Backpack
+  description: A nice and roomy backpack. I can probably fit 5 medium sized lasagnas in there.
+  type: 8
+  rarity: 6
+  icon: {fileID: 2800000, guid: 4ac2243502fa5a74cb17da08cd901b7a, type: 3}
+  mesh: {fileID: 4300000, guid: e370fa2301854b8428ad16f0eef1df84, type: 2}
+  materials:
+  - {fileID: 2100000, guid: fef0ac6406f255349966ad16c8fbb6e5, type: 2}
+  - {fileID: 2100000, guid: 58dfa678722f5b04dba7892b0dd46871, type: 2}
+  - {fileID: 2100000, guid: 2adbbcc70db54bd41ac0a0250eb85fde, type: 2}
+  - {fileID: 2100000, guid: 45d09a4670bfd8e4db349e2f41b1a3f9, type: 2}
+  - {fileID: 2100000, guid: 8b3e1ea6589889c409fa6aeb5ca03a83, type: 2}
+  materialToChangeColorOn: 0
+  exchangeItemDefId: 0
+  hatOffset: {x: 0, y: 0, z: 0}
+  hatThresholdBeforeOffset: {x: 0, y: 0, z: 0}
+  ignoreOffset: 0

@@ -1,0 +1,60 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a988ef1936bfc28eca5a2b44f151ff8f, type: 3}
+  m_Name: Bomb Tag
+  m_EditorClassIdentifier:
+  type: 6
+  musicType: 1
+  minPlayers: 0
+  maxPlayers: 256
+  longModeTime: 120
+  mediumModeTime: 90
+  shortModeTime: 60
+  modeTime: 120
+  waitForRoundOverToDeclareSoloWinner: 0
+  modeName: Bomb Tag
+  modeDescription: "• Some players are tagged and obtain a bomb\n\n• Pass the bomb to someone else before the time runs out\n\n• When the time runs out, the player holding the bomb will be eliminated"
+  compatibleMaps:
+  - {fileID: 11400000, guid: 1349f96dfe0faa847a98872e294913b7, type: 2}
+  - {fileID: 11400000, guid: 2a3e8dd86c09a2c4d8cf5e62d7254516, type: 2}
+  - {fileID: 11400000, guid: 1c349acd57672374994545fb28979f35, type: 2}
+  - {fileID: 11400000, guid: 6cf0ab455ea8c0c40bf5bb05118e116e, type: 2}
+  - {fileID: 11400000, guid: 0d0206c3d847986439bc88567b081df0, type: 2}
+  - {fileID: 11400000, guid: 2a12b15ee39fc2a4b8074fb688267762, type: 2}
+  - {fileID: 11400000, guid: b71e044859eaf7a46b9b8c90dc80102d, type: 2}
+  - {fileID: 11400000, guid: ed8f501582416e947b7d5c184c09ad74, type: 2}
+  - {fileID: 11400000, guid: cb70f30b35860f44590706858d89db4b, type: 2}
+  - {fileID: 11400000, guid: c66b877651030f4498e7993e7a3a1432, type: 2}
+  - {fileID: 11400000, guid: 57506e77724cb4540bd4cf3d5dcc8301, type: 2}
+  - {fileID: 11400000, guid: 326fc6b0cfcd60249916e18ced364c6f, type: 2}
+  - {fileID: 11400000, guid: 6a8c8cbc1f67aba498272285ca1b4785, type: 2}
+  - {fileID: 11400000, guid: 1a1bb2a79ffb0874b9637901eaf7f9ac, type: 2}
+  - {fileID: 11400000, guid: d154c709bf7a47040b1631016e6d55d8, type: 2}
+  - {fileID: 11400000, guid: b8661dbb2c0e8294797e9459d3fca79f, type: 2}
+  - {fileID: 11400000, guid: ed79a78f1cd61e140849f0ceef3319fb, type: 2}
+  - {fileID: 11400000, guid: 741f762ac9d291947a790230db79a2f9, type: 2}
+  - {fileID: 11400000, guid: a5fdd5174b8fe9f438c54c87c3f7bec8, type: 2}
+  - {fileID: 11400000, guid: 3afc54629960aec4f9b89886a768102e, type: 2}
+  - {fileID: 11400000, guid: 330f7583b60c8f34c9e187210b3c1ea8, type: 2}
+  - {fileID: 11400000, guid: dbc6bb486869fb54aaa698687dc1a60a, type: 2}
+  - {fileID: 11400000, guid: ded0c86e095a1784faf379c6efd3b725, type: 2}
+  - {fileID: 11400000, guid: 41ace579ce864ac4ca9b829ff3618570, type: 2}
+  largeMaps: []
+  mediumMaps: []
+  smallMaps: []
+  id: 6
+  isPlayable: 1
+  skipAsString: 0
+  bigOnlyMapPlayers: 100
+  bigAndMediumMapPlayers: 9
+  mediumAndSmallMapPlayers: 5
+  smallMapsOnlyPlayers: 4
