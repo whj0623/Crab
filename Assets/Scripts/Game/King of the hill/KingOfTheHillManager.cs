@@ -96,73 +96,27 @@ public class KingOfTheHillManager : MiniGameManager
     }
 
     [PunRPC]
-    public void EliminatePlayer(int viewID)
+    public void EliminatePlayer(int actorNumber)
     {
-        var photonView = PhotonView.Find(viewID);
-        if (photonView == null)
-        {
-            Debug.LogError($"No PhotonView found with ID {viewID}");
-            return;
-        }
-
-        var playerController = photonView.GetComponent<PlayerController>();
-        if (playerController == null)
-        {
-            Debug.LogError("PlayerController component is missing on the player object.");
-            return;
-        }
-
-        playerController.Eliminated();
+        PlayerController targetPlayer = gameManager.players.FirstOrDefault(p => p.photonView.Owner.ActorNumber == actorNumber);
+        if (targetPlayer != null)
+            targetPlayer.Eliminated();
     }
-
-    public void SetSurvivalStatus()
-    {
-        var sortedScores = scores.OrderBy(pair => pair.Value).ToList();
-        for (int i = 0; i < PhotonNetwork.CurrentRoom.PlayerCount; i++)
-        {
-            int playerActorNr = sortedScores[i].Key;
-            Photon.Realtime.Player player = PhotonNetwork.CurrentRoom.GetPlayer(playerActorNr);
-
-            if (player != null)
-            {
-                Hashtable props = new Hashtable { { "survived", i >= eliminatePlayerCount } };
-                player.SetCustomProperties(props);
-            }
-            else
-                print("����");
-        }
-    }
-    public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
-    {
-        count++;
-    }
-
-    [PunRPC]
-    public void ActivateGameOverUI()
-    {
-        gameOverUI.texts[1].text = $"{gameManager.leftPlayerCount}명 생존";
-        gameOverUI.gameObject.SetActive(true);
-    }
-
     
     public override void GameOver()
     {
         if (!PhotonNetwork.IsMasterClient)
             return;
-        SetSurvivalStatus();
-        StartCoroutine(EliminatePlayers());
-        
+        foreach (int actorNumber in playerScoreTexts.Keys)
+        {
+            if(playerScoreTexts[actorNumber].willEliminated.enabled)
+                photonView.RPC("ElimiatePlayer",RpcTarget.All,actorNumber);
+        }
+
+
+        gameOverUI.texts[1].text = $"{PhotonNetwork.CurrentRoom.PlayerCount - eliminatePlayerCount}명 생존";
+        gameOverUI.gameObject.SetActive(true);
+        //gameManager.Progress();
     }
 
-    private IEnumerator EliminatePlayers()
-    {
-        yield return new WaitUntil(() => count == PhotonNetwork.CurrentRoom.PlayerCount);
-        foreach (var player in PhotonNetwork.CurrentRoom.Players.Values)
-        {
-            if (!(bool)player.CustomProperties["survived"])
-                 photonView.RPC("EliminatePlayer", RpcTarget.All, gameManager.playersViewID[player.ActorNumber]);
-        }
-        photonView.RPC("ActivateGameOverUI", RpcTarget.All);
-        gameManager.Progress();
-    }
 }

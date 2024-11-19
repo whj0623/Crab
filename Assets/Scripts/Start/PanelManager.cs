@@ -17,7 +17,7 @@ public class PanelManager : MonoBehaviourPunCallbacks
 
 	private Dictionary<string, GameObject> panels;
 
-	#region Unity ¸Þ½ÃÁö
+	#region Unity ï¿½Þ½ï¿½ï¿½ï¿½
 	private void Awake()
 	{
 		Instance = this;
@@ -62,8 +62,7 @@ public class PanelManager : MonoBehaviourPunCallbacks
 
 	public override void OnJoinedRoom()
 	{
-
-		StartCoroutine(SceneFader.Instance.FadeOut(() => SceneManager.LoadScene("RoomScene")));
+		StartCoroutine(SceneFader.Instance.FadeOut(0,() => SceneManager.LoadScene("RoomScene")));
 		
 		PhotonNetwork.AutomaticallySyncScene = true;
 	}

@@ -93,7 +93,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void LoadGameScene(int index)
     {
-        StartCoroutine(SceneFader.Instance.FadeOut(()=> PhotonNetwork.LoadLevel(gameScenes[1])));
+        StartCoroutine(SceneFader.Instance.FadeOut(0,()=> PhotonNetwork.LoadLevel(gameScenes[1])));
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)

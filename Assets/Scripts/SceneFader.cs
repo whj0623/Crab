@@ -29,8 +29,9 @@ public class SceneFader : MonoBehaviour
         callback?.Invoke();
     }
 
-    public IEnumerator FadeOut(Action callback = null)
+    public IEnumerator FadeOut(float waitDuration,Action callback = null)
     {
+        yield return new WaitForSeconds(waitDuration);
         float t = 0;
         while (t < fadeDuration)
         {

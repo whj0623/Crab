@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     IEnumerator Ready()
     {
         startButton.enabled = false;
-        StartCoroutine(SceneFader.Instance.FadeOut());
+        StartCoroutine(SceneFader.Instance.FadeOut(0,null));
         yield return new WaitForSeconds(2f);
         photonView.RPC("PlayerReady", RpcTarget.MasterClient);
         Cursor.lockState = CursorLockMode.Locked;
@@ -103,8 +103,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 photonView.RPC("LoadNextGameScene", RpcTarget.All, ChooseNextGame());
             //else
             //{
-            //   ����ڰ� ���� ��� => ��� ��
-            //   ���� ��� => Room���� ���ư�
+            //     
             //}
         }
     }
@@ -112,7 +111,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void LoadNextGameScene(int index)
     {
-        StartCoroutine(SceneFader.Instance.FadeOut(() => PhotonNetwork.LoadLevel(gameScenes[index])));
+        StartCoroutine(SceneFader.Instance.FadeOut(3,() => PhotonNetwork.LoadLevel(gameScenes[index])));
     }
 
     private int ChooseNextGame()

@@ -5758,7 +5758,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: {fileID: 0}
   timerText: {fileID: 341042487}
-  timeRemaining: 90
+  timeRemaining: 5
   timerIsRunning: 0
   minigameManager: {fileID: 0}
 --- !u!114 &341042487
@@ -13336,7 +13336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timer: {fileID: 0}
   timerText: {fileID: 7917575034736112849}
-  timeRemaining: 90
+  timeRemaining: 15
   timerIsRunning: 0
   minigameManager: {fileID: 1465754180}
 --- !u!114 &7917575036068345408
