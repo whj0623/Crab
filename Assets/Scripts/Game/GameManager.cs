@@ -6,6 +6,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using ExitGames.Client.Photon.StructWrapping;
 
 
 public class GameManager : MonoBehaviourPunCallbacks
@@ -16,15 +17,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject mapCamera;
     public GameObject introUI;
     public GameObject statusUI;
-    public int leftPlayerCount;
-    public Text leftPlayerCountText;
-    public Text deadPlayerCountText;
     public List<PlayerController> players;
     public MiniGameManager minigameManager;
     public string[] gameScenes ={"Small Glass Jump","Small Color Climb", "Desert","Splat","Karlson"};
     public Dictionary<int, int> playersViewID;
     private int playersReady = 0;
-
     public int CurrentGame = 0;
 
 
@@ -32,9 +29,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         startButton.onClick.AddListener(() => StartCoroutine(Ready()));
         players = new List<PlayerController>();
-        leftPlayerCount = PhotonNetwork.CurrentRoom.PlayerCount;
-        leftPlayerCountText.text = leftPlayerCount.ToString();
-        deadPlayerCountText.text = "0";
         playersViewID = new Dictionary<int, int>();
     }
 
@@ -48,7 +42,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         Cursor.visible = false;
         mapCamera.SetActive(false);
         introUI.SetActive(false);
-        statusUI.SetActive(true);
+        if (statusUI != null)
+            statusUI.SetActive(true);
         if ((bool)PhotonNetwork.LocalPlayer.CustomProperties["survived"] == true)
         {
             int playerNumber = PhotonNetwork.LocalPlayer.ActorNumber - 1;
@@ -56,11 +51,10 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameObject playerObj = PhotonNetwork.Instantiate("Player/Player", playerPos.position, playerPos.rotation); 
             playerObj.name = $"Player {PhotonNetwork.LocalPlayer.NickName}";
             PlayerController playerController = playerObj.GetComponent<PlayerController>();
-            if (PhotonNetwork.IsMasterClient)
-                playersViewID.Add(playerNumber+1,playerController.GetComponent<PhotonView>().ViewID);
-            playerController.OnPlayerDead += OnPlayerDead;
+            int viewID = playerController.GetComponent<PhotonView>().ViewID;
             playerController.isFreeze = true;
-            players.Add(playerController);
+            photonView.RPC("AddPlayer", RpcTarget.All,playerNumber+1,viewID);
+            
         }
         else
             SetSpectatorMode();
@@ -68,6 +62,33 @@ public class GameManager : MonoBehaviourPunCallbacks
         StartCoroutine(SceneFader.Instance.FadeIn());
     }
 
+    [PunRPC]
+    void AddPlayer(int actorNumber,int viewID) 
+    {
+        StartCoroutine(WaitForPlayerInstantiate(viewID));
+        playersViewID.Add(actorNumber,viewID);
+    }
+    IEnumerator WaitForPlayerInstantiate(int viewID)
+    {
+        while (true)
+        {
+            PhotonView pv = PhotonView.Find(viewID);
+            if (pv != null)
+            {
+                PlayerController pc = pv.GetComponent<PlayerController>();
+                if (pc != null)
+                {
+                    players.Add(pc);
+                    yield break;
+                }
+            }
+            yield return new WaitForSeconds(0.1f);
+        }
+    }
+
+    
+    
+    
     private void SetSpectatorMode()
     {
 
@@ -87,19 +108,13 @@ public class GameManager : MonoBehaviourPunCallbacks
         StartCoroutine(SceneFader.Instance.FadeIn());
     }
 
-    private void OnPlayerDead()
-    {
-        leftPlayerCount--;
-        leftPlayerCountText.text = leftPlayerCount.ToString();
-        deadPlayerCountText.text = (PhotonNetwork.CurrentRoom.PlayerCount - leftPlayerCount).ToString();
-    }
 
     
     public void Progress()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            if (leftPlayerCount > 1)
+            if (players.Count > 1)
                 photonView.RPC("LoadNextGameScene", RpcTarget.All, ChooseNextGame());
             //else
             //{
@@ -129,20 +144,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             playersReady++;
             if (playersReady == PhotonNetwork.PlayerList.Length)
-            {
-                foreach (int viewID in playersViewID.Values)
-                {
-                    PhotonView view = PhotonView.Find(viewID);
-                    if (view != null)
-                    {
-                        PlayerController playerController = view.GetComponent<PlayerController>();
-                        if (playerController != null && !players.Contains(playerController))
-                            players.Add(playerController);
-                    }
-                }
-                
                 photonView.RPC("SyncTimer", RpcTarget.All);
-            }
         }
     }
 

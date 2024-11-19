@@ -127,7 +127,7 @@ public class RedLightManager : MiniGameManager
                 photonView.RPC("EliminatePlayer", RpcTarget.All, player.ActorNumber);
         }
 
-        gameOverUI.texts[1].text = $"{gameManager.leftPlayerCount}�� ����";
+        //gameOverUI.texts[1].text = $"{gameManager.leftPlayerCount}�� ����";
         gameOverUI.gameObject.SetActive(true);
 
         gameManager.Progress();

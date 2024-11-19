@@ -96,27 +96,25 @@ public class KingOfTheHillManager : MiniGameManager
     }
 
     [PunRPC]
-    public void EliminatePlayer(int actorNumber)
+    void EliminatePlayer(int viewID)
     {
-        PlayerController targetPlayer = gameManager.players.FirstOrDefault(p => p.photonView.Owner.ActorNumber == actorNumber);
-        if (targetPlayer != null)
-            targetPlayer.Eliminated();
+        var player = PhotonView.Find(viewID).GetComponent<PlayerController>();
+        player.Eliminated();
+        gameManager.players.Remove(player);
     }
     
+
+
     public override void GameOver()
     {
-        if (!PhotonNetwork.IsMasterClient)
-            return;
         foreach (int actorNumber in playerScoreTexts.Keys)
         {
-            if(playerScoreTexts[actorNumber].willEliminated.enabled)
-                photonView.RPC("ElimiatePlayer",RpcTarget.All,actorNumber);
+            if(playerScoreTexts[actorNumber].willEliminated.enabled && PhotonNetwork.IsMasterClient)
+                photonView.RPC("EliminatePlayer",RpcTarget.All,gameManager.playersViewID[actorNumber]);
         }
-
-
         gameOverUI.texts[1].text = $"{PhotonNetwork.CurrentRoom.PlayerCount - eliminatePlayerCount}명 생존";
         gameOverUI.gameObject.SetActive(true);
-        //gameManager.Progress();
+        gameManager.Progress();
     }
 
 }
