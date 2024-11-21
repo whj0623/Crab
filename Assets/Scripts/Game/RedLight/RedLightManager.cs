@@ -18,16 +18,14 @@ public class RedLightManager : MiniGameManager
     private HashSet<int> eliminatedPlayers = new HashSet<int>(); // �̹� ���� �÷��̾� ����
     private bool isObserving = false;
 
+    public AudioSource redLightAudioSource;
+    public AudioSource greenLightAudioSource;
+
     public override void GameStart()
     {
+        survivedPlayersViewID = new List<int>();
         foreach (PlayerController player in gameManager.players)
             player.isFreeze = false;
-        foreach (Player player in PhotonNetwork.CurrentRoom.Players.Values)
-        {
-            Hashtable customprop = new Hashtable();
-            customprop["survived"] = false;
-            player.SetCustomProperties(customprop);
-        }
         StartCoroutine(GameRoutine());
     }
 
@@ -37,14 +35,17 @@ public class RedLightManager : MiniGameManager
         {
             yield return new WaitForSeconds(Random.Range(3, 7));
             StartCoroutine(statue.Turn());
-            
-            yield return new WaitForSeconds(0.5f);
-            StartObserving(); // ���� ����
+            redLightAudioSource.Play();
+            yield return new WaitForSeconds(1f);  
+            StartObserving();
             
             yield return new WaitForSeconds(checkingLeftTime);
-            StopObserving(); // ���� ����
+            StopObserving(); 
             
             StartCoroutine(statue.Turn());
+            greenLightAudioSource.Play();
+
+            
         }
     }
 
@@ -57,30 +58,26 @@ public class RedLightManager : MiniGameManager
             Vector3 initialPosition = playerPositions[player];
             float distanceMoved = Vector3.Distance(initialPosition, player.transform.position);
 
-            if (distanceMoved >= 0.1f && !IsPlayerHiddenByOthers(player))
+            if (distanceMoved >= 0.1f && !IsPlayerHiddenByOthers(player) && isObserving)
             {
                 int viewID = player.ViewID;
-                if (!eliminatedPlayers.Contains(viewID) && PhotonView.Find(viewID).gameObject.transform.position.z > -50) // �̹� ������ ���� �÷��̾����� Ȯ��
+                if (!eliminatedPlayers.Contains(viewID) && !survivedPlayersViewID.Contains(viewID)) 
                 {
                     eliminatedPlayers.Add(viewID); 
                     photonView.RPC("EliminatePlayer", RpcTarget.All, viewID);
                 }
             }
         }
-        
-
     }
 
     private void StartObserving()
     {
         isObserving = true;
         playerPositions.Clear();
-        eliminatedPlayers.Clear(); // �� ���� ���� �� ���ŵ� �÷��̾� ��� �ʱ�ȭ
+        eliminatedPlayers.Clear();
 
         foreach (var player in gameManager.players)
-        {
             playerPositions[player.GetComponent<PhotonView>()] = player.transform.position;
-        }
     }
 
     private void StopObserving()
@@ -103,9 +100,7 @@ public class RedLightManager : MiniGameManager
                 float angle = Vector3.Angle(directionToPlayer, directionToOther);
 
                 if (angle < 15f && Vector3.Distance(playerPosition, otherPlayerPosition) <= distanceThreshold)
-                {
                     return true;
-                }
             }
         }
 
@@ -121,15 +116,14 @@ public class RedLightManager : MiniGameManager
     public override void GameOver()
     {
         isGameOver = true;
-        foreach (Photon.Realtime.Player player in PhotonNetwork.CurrentRoom.Players.Values)
+        foreach (int viewID in gameManager.playersViewID.Values )
         {
-            if (!(bool)player.CustomProperties["survived"])
-                photonView.RPC("EliminatePlayer", RpcTarget.All, player.ActorNumber);
+            if (!survivedPlayersViewID.Contains(viewID) && PhotonNetwork.IsMasterClient)
+                photonView.RPC("EliminatePlayer", RpcTarget.All, viewID);
         }
 
-        //gameOverUI.texts[1].text = $"{gameManager.leftPlayerCount}�� ����";
+        gameOverUI.texts[1].text = $"{survivedPlayersViewID.Count}명 생존";
         gameOverUI.gameObject.SetActive(true);
-
         gameManager.Progress();
     }
 }

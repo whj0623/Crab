@@ -9,11 +9,11 @@ public class GlassJumpManager : MiniGameManager
     public SafeZone safeZone;
     public GameManager gameManager;
     public GameOverUI gameOverUI;
-    public List<int> playersViewID;
+   
 
     void Start()
     {
-        playersViewID = new List<int>();
+        survivedPlayersViewID = new List<int>();
     }
     public override void GameStart()
     {
@@ -34,10 +34,10 @@ public class GlassJumpManager : MiniGameManager
     {
         foreach (int viewID in gameManager.playersViewID.Values )
         {
-            if (!playersViewID.Contains(viewID) && PhotonNetwork.IsMasterClient)
+            if (!survivedPlayersViewID.Contains(viewID) && PhotonNetwork.IsMasterClient)
                 photonView.RPC("EliminatePlayer", RpcTarget.All, viewID);
         }
-        gameOverUI.texts[1].text = $"{playersViewID.Count}명 생존";
+        gameOverUI.texts[1].text = $"{survivedPlayersViewID.Count}명 생존";
         gameOverUI.gameObject.SetActive(true);
         gameManager.Progress();
     }

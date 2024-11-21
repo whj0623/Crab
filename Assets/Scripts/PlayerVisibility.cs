@@ -5,7 +5,7 @@ using System.Collections;
 public class PlayerVisibility : MonoBehaviourPunCallbacks
 {
     public Camera playerCamera;
-
+    public CameraShake cs;
     void Start()
     {  
         SetupCamera();
@@ -16,7 +16,7 @@ public class PlayerVisibility : MonoBehaviourPunCallbacks
         if (photonView.IsMine)
         {
             playerCamera.gameObject.SetActive(true);
-            SetLayerRecursively(gameObject, LayerMask.NameToLayer("IgnoreForSelf"));
+            SetLayer(gameObject, LayerMask.NameToLayer("IgnoreForSelf"));
             playerCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("IgnoreForSelf"));
         }
         else
@@ -24,15 +24,14 @@ public class PlayerVisibility : MonoBehaviourPunCallbacks
     }
     public void DeadCamera()
     {
-        SetLayerRecursively(gameObject, LayerMask.NameToLayer("Default"));
-        //playerCamera.cullingMask &= ~(1 << LayerMask.NameToLayer("IgnoreForSelf"));
+        SetLayer(gameObject,LayerMask.NameToLayer("Default"));
     }
 
-    void SetLayerRecursively(GameObject obj, int newLayer)
+    void SetLayer(GameObject obj, int newLayer)
     {
         obj.layer = newLayer;
         foreach (Transform child in obj.transform)
-            SetLayerRecursively(child.gameObject, newLayer);
+            SetLayer(child.gameObject, newLayer);
     }
     
 }

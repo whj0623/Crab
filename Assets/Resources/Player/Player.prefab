@@ -995,7 +995,7 @@ MonoBehaviour:
   deathParticle: {fileID: 1020056262784864, guid: 25ad423333557fd4cbcc67af91d32666, type: 3}
   isDead: 0
   attackForce: 3
-  deathCamTarget: {fileID: 8385826068219870183}
+  deathCamTarget: {fileID: 8385726054513879611}
   playerModel: {fileID: 8391376755924217504}
   rb: {fileID: 6610082454793695381}
   anim: {fileID: 8440871941111076325}
@@ -1004,6 +1004,10 @@ MonoBehaviour:
   moveX: 0
   moveY: 0
   isFreeze: 0
+  cameraDistance: 5
+  cameraHeight: 2
+  cameraHeightOffset: 1.5
+  deadSens: 5
 --- !u!114 &3661042334213308231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1058,6 +1062,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCamera: {fileID: 3611378807413051564}
+  cs: {fileID: 7157994575858318992}
 --- !u!54 &6610082454793695381
 Rigidbody:
   m_ObjectHideFlags: 0

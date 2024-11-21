@@ -20,7 +20,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
 
     private GameStartUI gameStartUI;
 
-    private Dictionary<int, bool> playersReady = new Dictionary<int, bool>(); // �÷��̾���� �غ� ����
+    private Dictionary<int, bool> playersReady = new Dictionary<int, bool>();
 
 
     void Start()
@@ -93,7 +93,7 @@ public class RoomManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void LoadGameScene(int index)
     {
-        StartCoroutine(SceneFader.Instance.FadeOut(0,()=> PhotonNetwork.LoadLevel(gameScenes[0])));
+        StartCoroutine(SceneFader.Instance.FadeOut(0,()=> PhotonNetwork.LoadLevel(gameScenes[2])));
     }
 
     public override void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)

@@ -1,6 +1,8 @@
 using Photon.Pun;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
@@ -40,7 +42,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private Vector3 camPos, camTargetPos;
     private PlayerVisibility pv;
     private bool isSpectator = false;
-
+    private List<PlayerController> players;
+    private int targetPlayerIndex = 0;
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -88,11 +91,8 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
         else
         {
-            CamPosUpdateDead();
             if (isSpectator)
-            {
                 SpectatorCameraControl();
-            }
         }
     }
 
@@ -121,9 +121,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
                 moveDir.y = jumpPower;
         }
         else
-        {
             moveDir.y += Physics.gravity.y * Time.deltaTime * 3;
-        }
 
         Vector3 finalMove = moveHorizontal + Vector3.up * moveDir.y;
         cc.Move(finalMove * Time.deltaTime);
@@ -188,6 +186,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     private IEnumerator PushRoutine(Vector3 direction, float force, float duration)
     {
+        StartCoroutine(pv.cs.Shake(0.1f,0.1f));
         float elapsedTime = 0f;
         while (elapsedTime < duration)
         {
@@ -251,26 +250,28 @@ public class PlayerController : MonoBehaviourPunCallbacks
         cam.transform.localPosition = Vector3.Lerp(cam.transform.localPosition, camTargetPos, camSmooth);
     }
 
-    void CamPosUpdateDead()
+    IEnumerator CamPosUpdateDead()
     {
-        if (deathCamTarget != null)
+        float time = 0;
+        while (time < 4)
         {
-            Vector3 targetPosition = deathCamTarget.position + deathCamTarget.forward * 5f + new Vector3(0, 1.5f, -5f);
+            Vector3 targetPosition = deathCamTarget.position + deathCamTarget.forward * 5f * time/4 + new Vector3(0, 1.5f, -5f);
             cam.transform.position = Vector3.Lerp(cam.transform.position, targetPosition, camSmooth);
             cam.transform.LookAt(deathCamTarget);
+            time += Time.deltaTime;
+            yield return null;
         }
+        isSpectator = true;
     }
 
     public void Eliminated()
     {
+        players = new List<PlayerController>(FindObjectsOfType<PlayerController>());
         OnPlayerDead?.Invoke();
-        
-        PhotonNetwork.LocalPlayer.CustomProperties["survived"] = false;
-        if (deathParticle != null)
-            Instantiate(deathParticle, transform.position, Quaternion.identity);
-        pv.DeadCamera();
+        Instantiate(deathParticle, transform.position, Quaternion.identity);
         anim.enabled = false;
         isDead = true;
+        pv.DeadCamera();
         Destroy(playerModel);
         if (photonView.IsMine)
         {
@@ -278,8 +279,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
             customProps["survived"] = false;
             PhotonNetwork.LocalPlayer.SetCustomProperties(customProps);
         }
-
-        StartCoroutine(SwitchToSpectatorMode());
+        StartCoroutine(CamPosUpdateDead());
     }
 
     private void OnTriggerEnter(Collider other)
@@ -290,33 +290,59 @@ public class PlayerController : MonoBehaviourPunCallbacks
 
     private void Dead()
     {
+        players = new List<PlayerController>(FindObjectsOfType<PlayerController>());
         isDead = true;
         anim.enabled = false;
         pv.DeadCamera();
-        StartCoroutine(SwitchToSpectatorMode());
-    }
-
-    private IEnumerator SwitchToSpectatorMode()
-    {
-        isSpectator = true;
-        Cursor.lockState = CursorLockMode.None;
-        Cursor.visible = true;
-
-        while (isSpectator)
+        if (photonView.IsMine)
         {
-            yield return null;
+            Hashtable customProps = PhotonNetwork.LocalPlayer.CustomProperties;
+            customProps["survived"] = false;
+            PhotonNetwork.LocalPlayer.SetCustomProperties(customProps);
         }
 
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
+        StartCoroutine(CamPosUpdateDead());
     }
+    [SerializeField] private float cameraDistance = 5f;
+    [SerializeField] private float cameraHeight = 2f;
+    [SerializeField] private float cameraHeightOffset = 1.5f;
+    [SerializeField] private float deadSens = 5f;
+    private float horizontalAngle = 0f;
+    private float verticalAngle = 0f;
 
     private void SpectatorCameraControl()
     {
-        float mouseX = Input.GetAxis("Mouse X") * sens;
-        float mouseY = Input.GetAxis("Mouse Y") * sens;
+        if (players == null || players.Count == 0) return;
 
-        cam.transform.Rotate(-mouseY, mouseX, 0);
-        cam.transform.LookAt(transform.position);
+        if (players[targetPlayerIndex].isDead)
+            UpdateTargetPlayer();
+
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+            UpdateTargetPlayer();
+
+        float mouseX = Input.GetAxis("Mouse X") * deadSens;
+        float mouseY = Input.GetAxis("Mouse Y") * deadSens;
+
+        horizontalAngle += mouseX;
+        verticalAngle = Mathf.Clamp(verticalAngle - mouseY, -20f, 20f);
+
+        Transform target = players[targetPlayerIndex].transform;
+        Vector3 offset = new Vector3(
+            Mathf.Sin(horizontalAngle * Mathf.Deg2Rad) * cameraDistance,
+            Mathf.Sin(verticalAngle * Mathf.Deg2Rad) * cameraDistance + cameraHeight,
+            Mathf.Cos(horizontalAngle * Mathf.Deg2Rad) * cameraDistance
+        );
+
+        cam.transform.position = target.position + offset;
+        cam.transform.LookAt(target.position + Vector3.up * cameraHeightOffset);
     }
+
+    private void UpdateTargetPlayer()
+    {
+        int startIndex = targetPlayerIndex;
+        do targetPlayerIndex = (++targetPlayerIndex) % players.Count;
+        while (players[targetPlayerIndex].isDead && targetPlayerIndex != startIndex);
+    }
+
+
 }

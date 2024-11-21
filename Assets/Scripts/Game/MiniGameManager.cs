@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class MiniGameManager : MonoBehaviourPunCallbacks
 {
+     public List<int> survivedPlayersViewID;
+    
     public virtual void GameStart()
     {
 

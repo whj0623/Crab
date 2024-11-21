@@ -4,10 +4,6 @@ using UnityEngine;
 
 public class Statue : MonoBehaviour
 {
-    private void Start()
-    {
-        
-    }
 
     public IEnumerator Turn()
     {
