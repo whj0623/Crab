@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Ladder : MonoBehaviour
 {
-    public float climbSpeed = 5f;
+    private float climbSpeed = 5f;
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player"))

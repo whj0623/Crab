@@ -9,13 +9,13 @@ public class RedLightManager : MiniGameManager
 {
     public GameManager gameManager;
     public GameOverUI gameOverUI;
-    public Statue statue; // ������ ��ġ�� ��Ÿ���� Statue
-    public float distanceThreshold = 1f; // 1m
+    public Statue statue;
+    public float distanceThreshold = 1f; 
     public bool isGameOver = false;
 
-    private float checkingLeftTime = 5; // ���� �ð�
+    private float checkingLeftTime = 5; 
     private Dictionary<PhotonView, Vector3> playerPositions = new Dictionary<PhotonView, Vector3>();
-    private HashSet<int> eliminatedPlayers = new HashSet<int>(); // �̹� ���� �÷��̾� ����
+    private HashSet<int> eliminatedPlayers = new HashSet<int>();
     private bool isObserving = false;
 
     public AudioSource redLightAudioSource;
