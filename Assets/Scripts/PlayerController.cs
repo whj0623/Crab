@@ -44,6 +44,9 @@ public class PlayerController : MonoBehaviourPunCallbacks
     private bool isSpectator = false;
     private List<PlayerController> players;
     private int targetPlayerIndex = 0;
+
+    public Minigames currentGame;
+    public bool onLadder= false;
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -122,14 +125,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
         else
             moveDir.y += Physics.gravity.y * Time.deltaTime * 3;
-
+        if (onLadder)
+            moveDir.y = 0;
         Vector3 finalMove = moveHorizontal + Vector3.up * moveDir.y;
         cc.Move(finalMove * Time.deltaTime);
     }
 
     bool IsGrounded()
     {
-        return Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, cc.height / 2 + 0.1f);
+        if (onLadder)
+            return false;
+        if (Physics.Raycast(transform.position, Vector3.down, out RaycastHit hit, cc.height / 2 + 0.1f))
+            return true;
+        return false;
     }
 
     void Look()
@@ -168,13 +176,20 @@ public class PlayerController : MonoBehaviourPunCallbacks
                     targetPlayer = hit.collider.GetComponentInParent<PlayerController>();
 
                 if (targetPlayer != null && !targetPlayer.photonView.IsMine)
-                    targetPlayer.photonView.RPC("Pushed", targetPlayer.photonView.Owner, transform.position);
+                {
+                    targetPlayer.photonView.RPC("Pushed", targetPlayer.photonView.Owner, transform.position,attackForce);
+                    if (currentGame == Minigames.HideAndSeek && stick.activeSelf)
+                    {
+                        targetPlayer.photonView.RPC("Tagged",RpcTarget.All);
+                        photonView.RPC("Untagged",RpcTarget.All);
+                    }
+                }
             }
         }
     }
     
     [PunRPC]
-    private void Pushed(Vector3 sourcePosition)
+    private void Pushed(Vector3 sourcePosition, float attackForce)
     {
         Vector3 directionToAttacker = (transform.position - sourcePosition).normalized;
         isPushed = true;
@@ -208,6 +223,19 @@ public class PlayerController : MonoBehaviourPunCallbacks
         anim.Play(animationName);
     }
    
+    [PunRPC]
+    public void Tagged()
+    {
+        stick.SetActive(true);
+        stick.layer = default;
+        attackForce = 20;
+    }
+    [PunRPC]
+    public void Untagged()
+    {
+        stick.SetActive(false);
+        attackForce = 5;
+    }
     private void ReEnableMovement()
     {      
         isPushed = false;
@@ -263,7 +291,7 @@ public class PlayerController : MonoBehaviourPunCallbacks
         }
         isSpectator = true;
     }
-
+    [PunRPC]
     public void Eliminated()
     {
         players = new List<PlayerController>(FindObjectsOfType<PlayerController>());

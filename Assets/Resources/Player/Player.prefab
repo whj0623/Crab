@@ -1004,6 +1004,8 @@ MonoBehaviour:
   moveX: 0
   moveY: 0
   isFreeze: 0
+  currentGame: 0
+  onLadder: 0
   cameraDistance: 5
   cameraHeight: 2
   cameraHeightOffset: 1.5

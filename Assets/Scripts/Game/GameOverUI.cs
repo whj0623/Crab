@@ -7,8 +7,8 @@ public class GameOverUI : MonoBehaviour
     public Text[] texts;
     public Image[] images;
 
-    public float moveDuration = 1f; 
-    public float fillDuration = 1f; 
+    private float moveDuration = .5f;
+    private float fillDuration = .5f; 
     public Vector2 targetPosition = new Vector2(0, 0); 
 
     private void OnEnable()

@@ -20,10 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Playable Maps/RedLight/Desert.unity
     guid: fcc8b6a5649f3104f818dba8bbdfad1a
-  - enabled: 0
-    path: Assets/Scenes/Playable Maps/TileDrive/Splot.unity
-    guid: bb48a70c244377d4e96bc0d1d11f52a7
-  - enabled: 0
-    path: Assets/Scenes/Playable Maps/Karlson.unity
+  - enabled: 1
+    path: Assets/Scenes/Playable Maps/Hide And Seek/Karlson.unity
     guid: 3b35538c31ba5504c8fe8db3ee5bf6e2
   m_configObjects: {}

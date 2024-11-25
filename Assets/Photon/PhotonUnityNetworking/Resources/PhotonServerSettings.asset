@@ -54,6 +54,10 @@ MonoBehaviour:
   - EliminatePlayer
   - ActivateGameOverUI
   - AddPlayer
+  - SyncSeeker
+  - Tagged
+  - Untagged
+  - Eliminated
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

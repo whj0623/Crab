@@ -19,10 +19,10 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject statusUI;
     public List<PlayerController> players;
     public MiniGameManager minigameManager;
-    public string[] gameScenes ={"Small Glass Jump","Small Color Climb", "Desert","Splat","Karlson"};
+    private string[] gameScenes ={"Small Glass Jump","Small Color Climb", "Desert","Karlson"};
     public Dictionary<int, int> playersViewID;
     private int playersReady = 0;
-    public int CurrentGame = 0;
+    public Minigames CurrentGame ;
 
 
     private void Awake()
@@ -51,10 +51,10 @@ public class GameManager : MonoBehaviourPunCallbacks
             GameObject playerObj = PhotonNetwork.Instantiate("Player/Player", playerPos.position, playerPos.rotation); 
             playerObj.name = $"Player {PhotonNetwork.LocalPlayer.NickName}";
             PlayerController playerController = playerObj.GetComponent<PlayerController>();
+            playerController.currentGame = CurrentGame;
             int viewID = playerController.GetComponent<PhotonView>().ViewID;
             playerController.isFreeze = true;
             photonView.RPC("AddPlayer", RpcTarget.All,playerNumber+1,viewID);
-            
         }
         else
             SetSpectatorMode();
@@ -131,10 +131,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private int ChooseNextGame()
     {
-        int i = CurrentGame;
-        while (CurrentGame == i)
-            i = UnityEngine.Random.Range(0, 3);
-        return i;
+        Minigames nextGame = CurrentGame;
+        while (CurrentGame == nextGame)
+            nextGame = (Minigames)UnityEngine.Random.Range(0, 4);
+        return (int)nextGame;
     }
 
    [PunRPC]

@@ -3,6 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public enum Minigames
+{
+    GlassJump,
+    KingOfTheHIll,
+    RedLight,
+    HideAndSeek
+}
 public class MiniGameManager : MonoBehaviourPunCallbacks
 {
      public List<int> survivedPlayersViewID;
